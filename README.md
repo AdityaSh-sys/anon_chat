@@ -28,6 +28,20 @@ Hosted on [Railway](https://railway.app/) 🚄
 
 ---
 
+## ✅ To-Do / Improvements
+
+-Room matchmaking
+-Add emojis / file support
+-Persistent storage (Redis/Mongo)
+-Better error handling & reconnect
+
+---
+
+## 🧑‍💻 Author
+ Aditya Sharma
+
+ ---
+ 
 ## 🚀 Getting Started (Local Dev)
 
 ### 1. Clone the repository
@@ -40,12 +54,4 @@ npm install
 npm run dev:all
 
 
-✅ To-Do / Improvements
 
--Room matchmaking
--Add emojis / file support
--Persistent storage (Redis/Mongo)
--Better error handling & reconnect
-
-🧑‍💻 Author
- Aditya Sharma
