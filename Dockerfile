@@ -1,24 +1,22 @@
-FROM node:18.20.2-alpine
+FROM node:18.20.2-alpine3.19
 
 WORKDIR /app
 
-# Copy package files
+# Install dependencies
 COPY package*.json ./
-
-# Install all dependencies (including devDependencies like vite)
 RUN npm install
 
-# Copy rest of the code
+# Copy the rest of the code
 COPY . .
 
-# Build the application using Vite
+# Build frontend using Vite
 RUN npm run build
 
-# Optional: Remove devDependencies after build to shrink final image
+# Remove dev dependencies to reduce size
 RUN npm prune --production
 
-# Expose the port your server listens on
+# Railway will auto-inject PORT, so don't hardcode
 EXPOSE 3001
 
-# Start the server
+# Start the server (serves frontend + handles WS)
 CMD ["npm", "run", "server"]
