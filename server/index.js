@@ -2,7 +2,7 @@ import { WebSocketServer } from 'ws';
 import { createServer } from 'http';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync, createReadStream } from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -51,9 +51,22 @@ const server = createServer((req, res) => {
     return;
   }
 
-  // Default response
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Anonymous Chat WebSocket Server Running');
+  // // Default response
+  // res.writeHead(200, { 'Content-Type': 'text/plain' });
+  // res.end('Anonymous Chat WebSocket Server Running');
+// Serve built frontend from /dist
+const filePath = join(__dirname, '../dist/index.html');
+if (req.url === '/' || req.url === '/index.html') {
+  if (existsSync(filePath)) {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    createReadStream(filePath).pipe(res);
+  } else {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('Frontend not built. Please run "npm run build"');
+  }
+  return;
+}
+
 });
 
 // Create WebSocket server
